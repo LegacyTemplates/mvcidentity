@@ -66,14 +66,13 @@ namespace MyApp
                 .AddDefaultTokenProviders();
             
             services.AddAuthentication(IISDefaults.AuthenticationScheme)
-                .AddTwitter(options =>
-                {
+                .AddTwitter(options => { /* Create Twitter App at: https://dev.twitter.com/apps */
                     options.ConsumerKey = Configuration["oauth.twitter.ConsumerKey"];
                     options.ConsumerSecret = Configuration["oauth.twitter.ConsumerSecret"];
                     options.SaveTokens = true;
                     options.RetrieveUserDetails = true;
                 })
-                .AddFacebook(options => {
+                .AddFacebook(options => { /* Create Facebook App at: https://developers.facebook.com/apps */
                     options.AppId = Configuration["oauth.facebook.AppId"];
                     options.AppSecret = Configuration["oauth.facebook.AppSecret"];
                     options.SaveTokens = true;
@@ -81,12 +80,12 @@ namespace MyApp
                     Configuration.GetSection("oauth.facebook.Permissions").GetChildren()
                         .Each(x => options.Scope.Add(x.Value));
                 })
-                .AddGoogle(options => {
+                .AddGoogle(options => { /* Create App https://console.developers.google.com/apis/credentials */
                     options.ClientId = Configuration["oauth.google.ConsumerKey"];
                     options.ClientSecret = Configuration["oauth.google.ConsumerSecret"];
                     options.SaveTokens = true;
                 })
-                .AddMicrosoftAccount(options => {
+                .AddMicrosoftAccount(options => { /* Create App https://apps.dev.microsoft.com */
                     options.ClientId = Configuration["oauth.microsoftgraph.AppId"];
                     options.ClientSecret = Configuration["oauth.microsoftgraph.AppSecret"];
                     options.SaveTokens = true;
