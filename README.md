@@ -1,6 +1,6 @@
 # mvcidentity
 
-.NET Core 2.2 MVC Website integrated with ServiceStack Auth
+.NET Core 2.2 MVC Website integrated with ServiceStack using ASP.NET Identity Auth
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/mvcidentity.png)](http://mvcidentity.web-templates.io/)
 
