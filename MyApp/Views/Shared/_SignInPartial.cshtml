@@ -1,0 +1,147 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+
+<div class="row" style="margin-top: 2em">
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="col-lg-6">
+        <h3>Sign In using 3rd Party Provider</h3>
+        <div style="float: left; width: 250px; padding: 0 0 0 0;">
+            @{
+                var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                if (loginProviders.Count == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in loginProviders)
+                                {
+                                    <button type="submit" class="btn btn-block btn-social btn-@provider.Name.ToLower()" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                        <i class="fab fa-@provider.Name.ToLower()"></i>
+                                        Sign in with @provider.Name
+                                    </button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-lg-6">
+
+        <h3>Sign In using credentials</h3>
+        
+        <form method="post">
+            <div class="form-row">
+                @Html.ValidationSummary()
+                <input type="hidden" name="redirect" value="@(Html.GetQueryString("ReturnUrl") ?? ViewData["ReturnUrl"])" />
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input class="form-control input-lg" id="Email" name="Email" type="text" placeholder="Email" value="@Html.GetFormData("Email")">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <input class="form-control input-lg" id="Password" name="Password" type="Password" placeholder="Password" value="">
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="checkbox" id="chkRememberMe" name="rememberMe" value="true" checked="checked">
+                    <label for="chkRememberMe">Remember Me</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <a class="lnk" asp-area="" asp-controller="Account" asp-action="Register" asp-route-ReturnUrl="@ViewData["ReturnUrl"]">Register New User</a>
+                </div>
+            </div>
+            <div>
+                <b>Quick Login:</b>
+                <div class="quicklist">
+                    <span data-click="switchUser:user@@gmail.com">user@@gmail.com</span>
+                    <span data-click="switchUser:manager@@gmail.com">manager@@gmail.com</span>
+                    <span data-click="switchUser:admin@@gmail.com">admin@@gmail.com</span>
+                    <span data-click="switchUser:new@@user.com">new@@user.com</span>
+                </div>
+            </div>
+        </form>        
+    </div>
+}
+else
+{
+    <div class="col-lg-6">
+        <table id="session-info" class="table table-bordered">
+            <caption style="caption-side:top;">Authenticated User Session</caption>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>@Model.Id</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <th>UserName</th>
+                    <td>@Model.UserName</td>
+                </tr>
+                <tr>
+                    <th>DisplayName</th>
+                    <td>@Model.DisplayName</td>
+                </tr>
+                <tr>
+                    <th>AuthProvider</th>
+                    <td>@Model.AuthProvider</td>
+                </tr>
+                <tr>
+                    <th>ProfileUrl</th>
+                    <td>
+                        <img src="@Model.ProfileUrl" /> 
+                        <span>@(Model.ProfileUrl ?? "(fallback)")</span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                            <button type="submit" class="btn btn-link">Sign Out</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        View Public and Secure Pages and APIs on <a href="/">Home page</a>.
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    $(document).bindHandlers({
+       switchUser: function(u) {
+           $("#Email").val(u);
+           $("#Password").val('p@55wOrd');
+       }
+    });        
+});
+</script>

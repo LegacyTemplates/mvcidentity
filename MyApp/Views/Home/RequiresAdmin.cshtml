@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Requires Admin";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>This page is only accessible to <b>Admin</b> Users.</p>
+
+<form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+    <a href="/" class="btn btn-link">&lt; Home</a> |
+    <button type="submit" class="btn btn-link">Sign Out</button>
+</form>

@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Requires Role";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>This page is only accessible to <b>Authenticated Users</b> with the <b>Manager</b> role.</p>
+
+<form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+    <a href="/" class="btn btn-link">&lt; Home</a> |
+    <button type="submit" class="btn btn-link">Sign Out</button>
+</form>

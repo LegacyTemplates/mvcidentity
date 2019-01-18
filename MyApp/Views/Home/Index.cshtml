@@ -1,0 +1,32 @@
+﻿@model CustomUserSession
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center" style="margin: 0 0 30px 0">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="row" style="margin-top: 2em">
+@if (!Model.IsAuthenticated)
+{
+    <div class="col-lg-12 text-center">
+        <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-secondary">
+            You are not yet authenticated, please sign in.
+        </a>
+    </div>
+}
+else
+{
+    <div class="col-lg-12 text-center">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <img src="@Model.GetProfileUrl()" style="height:32px; margin-right:.5em">
+            Hi @Model.DisplayName!
+            <button type="submit" class="btn btn-link" style="margin:-6px 0 0 -6px">Sign Out</button>
+        </form>
+    </div>
+}
+</div>
+
+<partial name="_PagesAndApisPartial" />
