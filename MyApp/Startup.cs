@@ -256,7 +256,7 @@ namespace MyApp
             // TODO: Replace OAuth App settings in: appsettings.Development.json
             Plugins.Add(new AuthFeature(() => new CustomUserSession(), 
                 new IAuthProvider[] {
-                    new NetCoreIdentityAuthProvider(AppSettings) // Adapter to enable ServiceStack Auth in MVC
+                    new NetCoreIdentityAuthProvider(AppSettings) // Adapter to enable ASP.NET Core Identity Auth in ServiceStack
                     {
                         AdminRoles = { "Manager" }, // Automatically Assign additional roles to Admin Users
                         PopulateSessionFilter = (session, principal, req) => 
