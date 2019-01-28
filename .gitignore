@@ -6,7 +6,6 @@
 # Custom
 #dist/
 coverage/
-lib/
 Migrations/
 
 # User-specific files
