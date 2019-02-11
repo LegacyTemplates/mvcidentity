@@ -236,8 +236,14 @@ namespace MyApp
                     assertResult(await UserManager.AddToRoleAsync(adminUser, RoleNames.Admin));
                 }
             }
-        }
-        
+        }        
+    }
+
+    public static class AppExtensions
+    {
+        public static T DbExec<T>(this IServiceProvider services, Func<System.Data.IDbConnection, T> fn) => 
+            services.DbContextExec<ApplicationDbContext,T>(ctx => {
+                ctx.Database.OpenConnection(); return ctx.Database.GetDbConnection(); }, fn);
     }
     
     public class AppHost : AppHostBase
@@ -262,15 +268,21 @@ namespace MyApp
                         PopulateSessionFilter = (session, principal, req) => 
                         {
                             //Example of populating ServiceStack Session Roles + Custom Info from EF Identity DB
-                            var userManager = req.TryResolve<UserManager<ApplicationUser>>();
-                            var user = userManager.FindByIdAsync(session.Id).Result;
-                            var roles = userManager.GetRolesAsync(user).Result;
-                            session.Roles = roles.ToList();
+                            var user = req.GetMemoryCacheClient().GetOrCreate(
+                                IdUtils.CreateUrn(nameof(ApplicationUser), session.Id),
+                                TimeSpan.FromMinutes(5), // return cached results before refreshing cache from db every 5 mins
+                                () => ApplicationServices.DbExec(db => db.GetIdentityUserById<ApplicationUser>(session.Id)));
+
                             session.Email = session.Email ?? user.Email;
                             session.FirstName = session.FirstName ?? user.FirstName;
                             session.LastName = session.LastName ?? user.LastName;
                             session.DisplayName = session.DisplayName ?? user.DisplayName;
                             session.ProfileUrl = user.ProfileUrl ?? AuthMetadataProvider.DefaultNoProfileImgUrl;
+
+                            session.Roles = req.GetMemoryCacheClient().GetOrCreate(
+                                IdUtils.CreateUrn(nameof(session.Roles), session.Id),
+                                TimeSpan.FromMinutes(5), // return cached results before refreshing cache from db every 5 mins
+                                () => ApplicationServices.DbExec(db => db.GetIdentityUserRolesById(session.Id)));
                         }
                     }, 
                 }));
