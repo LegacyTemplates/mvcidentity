@@ -42,7 +42,7 @@
         
         <form method="post">
             <div class="form-row">
-                @Html.ValidationSummary(exceptFields: new[]{ "Email", "Password" })
+                @Html.ValidationSummary(exceptFields: new[]{ "userName", "password" })
                 <input type="hidden" name="redirect" value="@(Html.GetQueryString("ReturnUrl") ?? ViewData["ReturnUrl"])" />
             </div>
 
