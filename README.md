@@ -2,13 +2,13 @@
 
 .NET Core 2.2 MVC Website integrated with ServiceStack using ASP.NET Identity Auth
 
-[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/mvcidentity.png)](http://mvcidentity.web-templates.io/)
+![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/mvcidentity.png)
 
 > Login
 
-[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/mvcidentity-login.png)](http://mvcidentity.web-templates.io/)
+![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/mvcidentity-login.png)
 
-> Browse [source code](https://github.com/NetCoreTemplates/mvcidentity), view live demo [mvcidentity.web-templates.io](http://mvcidentity.web-templates.io) and install with the `web` dotnet tool:
+> Browse [source code](https://github.com/NetCoreTemplates/mvcidentity) and install with the `web` dotnet tool:
 
     $ dotnet tool install -g web
 
