@@ -72,7 +72,7 @@ namespace MyApp
                     options.SaveTokens = true;
                     options.RetrieveUserDetails = true;
                 })
-                .AddFacebook(options => { /* Create Facebook App at: https://developers.facebook.com/apps */
+                .AddFacebook(options => { /* Create App https://developers.facebook.com/apps */
                     options.AppId = Configuration["oauth.facebook.AppId"];
                     options.AppSecret = Configuration["oauth.facebook.AppSecret"];
                     options.SaveTokens = true;
