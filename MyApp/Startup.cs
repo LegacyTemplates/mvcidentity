@@ -35,17 +35,13 @@ namespace MyApp
     ///   $ dotnet ef migrations add CreateMyAppIdentitySchema
     ///   $ dotnet ef database update
     /// </summary>
-    public class Startup
+    public class Startup : ModularStartup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration) : base(configuration){}
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public new void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -277,7 +273,7 @@ namespace MyApp
                             session.FirstName = session.FirstName ?? user.FirstName;
                             session.LastName = session.LastName ?? user.LastName;
                             session.DisplayName = session.DisplayName ?? user.DisplayName;
-                            session.ProfileUrl = user.ProfileUrl ?? AuthMetadataProvider.DefaultNoProfileImgUrl;
+                            session.ProfileUrl = user.ProfileUrl ?? Svg.GetDataUri(Svg.Icons.DefaultProfile);
 
                             session.Roles = req.GetMemoryCacheClient().GetOrCreate(
                                 IdUtils.CreateUrn(nameof(session.Roles), session.Id),
