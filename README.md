@@ -10,9 +10,9 @@
 
 > Browse [source code](https://github.com/NetCoreTemplates/mvcidentity) and install with the `web` dotnet tool:
 
-    $ dotnet tool install -g web
+    $ dotnet tool install -g x
 
-    $ web new mvcidentity ProjectName
+    $ x new mvcidentity ProjectName
 
 ### Database Setup
 
