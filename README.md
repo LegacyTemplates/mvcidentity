@@ -1,6 +1,6 @@
 # mvcidentity
 
-.NET Core 3.1 MVC Website integrated with ServiceStack using ASP.NET Identity Auth
+.NET Core 5.0 MVC Website integrated with ServiceStack using ASP.NET Identity Auth
 
 ![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/mvcidentity.png)
 
