@@ -14,6 +14,12 @@
 
     $ x new mvcidentity ProjectName
 
+Alternatively write new project files directly into an empty repository, using the Directory Name as the ProjectName:
+
+    $ git clone https://github.com/<User>/<ProjectName>.git
+    $ cd <ProjectName>
+    $ x new mvcidentity
+
 ### Database Setup
 
 To create the User and Auth tables you will need access to SQL Server instance then change the `"DefaultConnection"` connection string in `appsettings.json` then you can run the ef .NET Core tool:
