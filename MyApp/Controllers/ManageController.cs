@@ -112,6 +112,7 @@ namespace MyApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                // ReSharper disable once Mvc.ViewNotResolved
                 return View(model);
             }
 
